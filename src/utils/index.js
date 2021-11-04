@@ -6,10 +6,22 @@ const color = {
   dark: 'dark',
 };
 
-const dateTrimmer = ({ timestamp }) => {
+const dateTimestampTrimmer = ({ timestamp }) => {
   const DateObj = new Date(timestamp);
-  DateObj?.setHours(0, 0, 0);
-  return new Date(DateObj?.getTime());
+  DateObj?.setHours(0, 0, 0, 0);
+  return DateObj?.getTime();
+};
+
+const getTrimmedTodayTimestamp = () => dateTimestampTrimmer({ timestamp: Date?.now() })
+
+const getFirstDateInMonthTimestamp = ({
+  timestamp,
+}) => {
+  const dateObj = new Date(timestamp);
+  const year = dateObj.getFullYear();
+  const month = dateObj.getMonth();
+  const firstDateInMonthObj = new Date(year, month, 1);
+  return firstDateInMonthObj.getTime();
 };
 
 const getEssentialTimestamps = ({ dateObj }) => {
@@ -25,10 +37,10 @@ const getEssentialTimestamps = ({ dateObj }) => {
   };
 };
 
-const getDateListOfMonth = ({ selectedTimestamp = 1635947480743 }) => {
-  const dateObj = dateTrimmer({
+const getDateListOfMonth = ({ selectedTimestamp }) => {
+  const dateObj = new Date(dateTimestampTrimmer({
     timestamp: selectedTimestamp,
-  });
+  }));
   const {
     startTimestamp,
     firstDateInMonthTimestamp,
@@ -36,24 +48,39 @@ const getDateListOfMonth = ({ selectedTimestamp = 1635947480743 }) => {
   } = getEssentialTimestamps({
     dateObj,
   });
-  const list = [];
-  for (let i = 0; i < 6; i += 1) {
-    const row = [];
-    for (let j = 0; j < 7; j += 1) {
-      const timestamp = startTimestamp + (i * 7 + j) * DAY_IN_MILLISECONDS;
-      const data = {
-        timestamp,
-        date: new Date(timestamp).getDate(),
-        color:
-          firstDateInMonthTimestamp <= timestamp && timestamp <= lastDateInMonthTimestamp
-            ? color.dark
-            : color.light,
-      };
-      row.push(data);
-    }
-    list.push(row);
-  }
-  return list;
+  const list = new Array(AMOUNT_IN_CALENDAR).fill(0);
+  return list.map((elem, index) => {
+    const timestamp = startTimestamp + index * DAY_IN_MILLISECONDS;
+    const data = {
+      timestamp,
+      date: new Date(timestamp).getDate(),
+      color:
+        firstDateInMonthTimestamp <= timestamp && timestamp <= lastDateInMonthTimestamp
+          ? color.dark
+          : color.light,
+    };
+    return data;
+  });
+  // for (let i = 0; i < 6; i += 1) {
+  //   const row = [];
+  //   for (let j = 0; j < 7; j += 1) {
+  //     const timestamp = startTimestamp + (i * 7 + j) * DAY_IN_MILLISECONDS;
+  //     const data = {
+  //       timestamp,
+  //       date: new Date(timestamp).getDate(),
+  //       color:
+  //         firstDateInMonthTimestamp <= timestamp && timestamp <= lastDateInMonthTimestamp
+  //           ? color.dark
+  //           : color.light,
+  //     };
+  //     row.push(data);
+  //   }
+  //   list.push(row);
+  // }
 };
 
-export { getDateListOfMonth };
+export {
+  getDateListOfMonth,
+  getTrimmedTodayTimestamp,
+  getFirstDateInMonthTimestamp
+};
