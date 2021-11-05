@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
-import DaysRow from './DaysRow';
 import DatesGrid from './DatesGrid';
 import MainController from './MainController';
 import { IntervalMap } from '../constants';
@@ -28,14 +27,6 @@ const Container = styled.div`
   box-sizing: border-box;
 `;
 
-const DatePickerContainer = styled.div`
-  width: 100%;
-  height: 90%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  gap: 5px;
-`;
-
 function DatePicker() {
   const todayTimestamp = getTrimmedTodayTimestamp();
   const [selectedTimestamp, setTimestamp] = useState(todayTimestamp);
@@ -49,14 +40,11 @@ function DatePicker() {
     switch (interval) {
       case `${IntervalMap.day}`: {
         return (
-          <DatePickerContainer>
-            <DaysRow />
-            <DatesGrid
-              onDateClickHandler={onDateClickHandler}
-              todayTimestamp={todayTimestamp}
-              selectedTimestamp={selectedTimestamp}
-            />
-          </DatePickerContainer>
+          <DatesGrid
+            onDateClickHandler={onDateClickHandler}
+            todayTimestamp={todayTimestamp}
+            selectedTimestamp={selectedTimestamp}
+          />
         );
       }
       case `${IntervalMap.month}`: {

@@ -1,10 +1,19 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { GridItem } from './Commons';
+import DaysRow from './DaysRow';
 import {
   getDateListOfMonth,
   getEdgeDateInMonthTimestamp,
 } from '../utils';
+
+const Container = styled.div`
+  width: 100%;
+  height: 90%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 5px;
+`;
 
 const Date = styled.div`
   height: 30px;
@@ -65,7 +74,7 @@ const DateElement = React.memo(({
   </GridItem>
 ), areEqual);
 
-const DatesGrid = ({
+const Grid = ({
   onDateClickHandler,
   todayTimestamp,
   selectedTimestamp,
@@ -96,7 +105,23 @@ const DatesGrid = ({
       isToday={todayTimestamp === timestamp}
     />
   ));
-}
+};
 
+function DatesGrid({
+  onDateClickHandler,
+  todayTimestamp,
+  selectedTimestamp
+}) {
+  return (
+    <Container>
+      <DaysRow />
+      <Grid
+        onDateClickHandler={onDateClickHandler}
+        todayTimestamp={todayTimestamp}
+        selectedTimestamp={selectedTimestamp}
+      />
+    </Container>
+  );
+}
 
 export default DatesGrid;
