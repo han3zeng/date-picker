@@ -8,7 +8,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 30px;
+  height: 10%;
 `;
 
 const Arrow = styled.div`
@@ -22,7 +22,7 @@ const Arrow = styled.div`
 `;
 
 const Info = styled.div`
-
+  cursor: pointer;
 `;
 
 const numberToMonth = {
@@ -84,39 +84,72 @@ function onPreivousClickHandler({
   }
 }
 
-function onMainClickHandler () {
-
+function onMainClickHandler({
+  getNewInterval,
+  interval,
+}) {
+  if (IntervalMap.day === interval) {
+    getNewInterval({
+      interval: IntervalMap.month,
+    });
+  }
+  if (IntervalMap.month === interval) {
+    getNewInterval({
+      interval: IntervalMap.year,
+    });
+  }
 }
 
 function Content({
   interval,
-  timestamp
+  timestamp,
+  getNewInterval,
 }) {
   const dateObj = new Date(timestamp);
   const month = dateObj.getMonth() + 1;
   const year = dateObj.getFullYear();
+  let content = null;
   switch (interval) {
     case `${IntervalMap.day}`: {
-      return (<Info>{`${numberToMonth[month]} ${year}`}</Info>);
+      content = (<div>{`${numberToMonth[month]} ${year}`}</div>);
+      break;
     }
     case `${IntervalMap.month}`: {
-      return (<Info>{`${year}`}</Info>);
+      content = (<div>{`${year}`}</div>);
+      break;
     }
     case `${IntervalMap.year}`: {
       const upperBound = 9 - (year % 10) + year;
       const lowerBound = year - (year % 10);
-      return (<Info>{`${lowerBound} - ${upperBound}`}</Info>);
+      content = (<div>{`${lowerBound} - ${upperBound}`}</div>);
+      break;
     }
     default:
-      return <div>error</div>;
+      content = (<div>error</div>);
+      break;
   }
+  return (
+    <Info
+      role="button"
+      onClick={() => {
+        onMainClickHandler({
+          interval,
+          getNewInterval,
+        });
+      }}
+      onKeyDown={() => {}}
+    >
+      {content}
+    </Info>
+  );
 }
 
 
 function MainController({
   timestamp,
   interval,
-  getNewTimestamp
+  getNewTimestamp,
+  getNewInterval,
 }) {
   return (
     <Container>
@@ -135,6 +168,7 @@ function MainController({
       <Content
         timestamp={timestamp}
         interval={interval}
+        getNewInterval={getNewInterval}
       />
       <Arrow
         onClick={() => {

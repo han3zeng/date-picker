@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { GridItem } from './Commons';
+import {
+  getDateListOfMonth,
+  getEdgeDateInMonthTimestamp,
+} from '../utils';
 
 const Date = styled.div`
   height: 30px;
@@ -62,27 +66,37 @@ const DateElement = React.memo(({
 ), areEqual);
 
 const DatesGrid = ({
-  dateList,
   onDateClickHandler,
   todayTimestamp,
-  monthIndex,
   selectedTimestamp,
-}) => dateList.map(({
-  date,
-  color,
-  timestamp,
-}) => (
-  <DateElement
-    key={timestamp}
-    date={date}
-    timestamp={timestamp}
-    color={color}
-    onDateClickHandler={onDateClickHandler}
-    todayTimestamp={todayTimestamp}
-    monthIndex={monthIndex}
-    selected={selectedTimestamp === timestamp}
-    isToday={todayTimestamp === timestamp}
-  />
-));
+}) => {
+  const monthIndex = getEdgeDateInMonthTimestamp({
+    timestamp: selectedTimestamp,
+    when: 'firstDate',
+  });
+
+  const dateList = useMemo(() => getDateListOfMonth({
+    selectedTimestamp,
+  }), [monthIndex]);
+
+  return dateList.map(({
+    date,
+    color,
+    timestamp,
+  }) => (
+    <DateElement
+      key={timestamp}
+      date={date}
+      timestamp={timestamp}
+      color={color}
+      onDateClickHandler={onDateClickHandler}
+      todayTimestamp={todayTimestamp}
+      monthIndex={monthIndex}
+      selected={selectedTimestamp === timestamp}
+      isToday={todayTimestamp === timestamp}
+    />
+  ));
+}
+
 
 export default DatesGrid;
