@@ -14,21 +14,40 @@ const dateTimestampTrimmer = ({ timestamp }) => {
 
 const getTrimmedTodayTimestamp = () => dateTimestampTrimmer({ timestamp: Date?.now() })
 
-const getFirstDateInMonthTimestamp = ({
+const getEdgeDateInMonthTimestamp = ({
   timestamp,
+  when = 'firstDate',
 }) => {
   const dateObj = new Date(timestamp);
   const year = dateObj.getFullYear();
   const month = dateObj.getMonth();
-  const firstDateInMonthObj = new Date(year, month, 1);
-  return firstDateInMonthObj.getTime();
+  let resultDateObj;
+  switch (when) {
+    case 'firstDate': {
+      resultDateObj = new Date(year, month, 1);
+      break;
+    }
+    case 'lastDate': {
+      resultDateObj = new Date(year, month + 1, 0);
+      break;
+    }
+    default: {
+      resultDateObj = undefined;
+      break;
+    }
+  }
+  return resultDateObj?.getTime() || undefined;
 };
 
-const getEssentialTimestamps = ({ dateObj }) => {
-  const year = dateObj.getFullYear();
-  const month = dateObj.getMonth();
-  const firstDateInMonthObj = new Date(year, month, 1);
-  const lastDateInMonthObj = new Date(year, month + 1, 0);
+const getEssentialTimestamps = ({ timestamp }) => {
+  const firstDateInMonthObj = new Date(getEdgeDateInMonthTimestamp({
+    timestamp,
+    when: 'firstDate',
+  }));
+  const lastDateInMonthObj = new Date(getEdgeDateInMonthTimestamp({
+    timestamp,
+    when: 'lastDate',
+  }));
   const firstDayInMonth = firstDateInMonthObj.getDay();
   return {
     firstDateInMonthTimestamp: firstDateInMonthObj.getTime(),
@@ -38,15 +57,15 @@ const getEssentialTimestamps = ({ dateObj }) => {
 };
 
 const getDateListOfMonth = ({ selectedTimestamp }) => {
-  const dateObj = new Date(dateTimestampTrimmer({
+  const trimmedTimestamp = dateTimestampTrimmer({
     timestamp: selectedTimestamp,
-  }));
+  });
   const {
     startTimestamp,
     firstDateInMonthTimestamp,
     lastDateInMonthTimestamp,
   } = getEssentialTimestamps({
-    dateObj,
+    timestamp: trimmedTimestamp,
   });
   const list = new Array(AMOUNT_IN_CALENDAR).fill(0);
   return list.map((elem, index) => {
@@ -82,5 +101,5 @@ const getDateListOfMonth = ({ selectedTimestamp }) => {
 export {
   getDateListOfMonth,
   getTrimmedTodayTimestamp,
-  getFirstDateInMonthTimestamp
+  getEdgeDateInMonthTimestamp,
 };

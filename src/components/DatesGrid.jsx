@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { GridItem } from './Commons';
 
 const Date = styled.div`
-  width: 30px;
   height: 30px;
+  width: 30px;
   display: flex;
   justify-content: center;
   align-items: center;

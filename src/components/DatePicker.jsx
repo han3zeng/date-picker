@@ -2,10 +2,12 @@ import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import DaysRow from './DaysRow';
 import DatesGrid from './DatesGrid';
+import MainController from './MainController';
+import { IntervalMap } from '../constants';
 import {
   getDateListOfMonth,
   getTrimmedTodayTimestamp,
-  getFirstDateInMonthTimestamp,
+  getEdgeDateInMonthTimestamp,
 } from '../utils';
 
 // const DMYSContainer = styled.div`
@@ -16,7 +18,7 @@ import {
 //   return <DMYSContainer />;
 // }
 
-const DatePickerContainer = styled.div`
+const Container = styled.div`
   width: 100%;
   height: 100%;
   max-width: 600px;
@@ -26,6 +28,11 @@ const DatePickerContainer = styled.div`
   border-radius: 3px;
   padding: 15px;
   box-sizing: border-box;
+`;
+
+const DatePickerContainer = styled.div`
+  width: 100%;
+  height: 90%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: 5px;
@@ -34,8 +41,11 @@ const DatePickerContainer = styled.div`
 function DatePicker() {
   const todayTimestamp = getTrimmedTodayTimestamp();
   const [selectedTimestamp, setTimestamp] = useState(todayTimestamp);
-  const monthIndex = getFirstDateInMonthTimestamp({
+  const [interval, setInterval] = useState(IntervalMap.day);
+
+  const monthIndex = getEdgeDateInMonthTimestamp({
     timestamp: selectedTimestamp,
+    when: 'firstDate',
   });
 
   const dateList = useMemo(() => getDateListOfMonth({
@@ -47,16 +57,29 @@ function DatePicker() {
   };
 
   return (
-    <DatePickerContainer>
-      <DaysRow />
-      <DatesGrid
-        dateList={dateList}
-        onDateClickHandler={onDateClickHandler}
-        todayTimestamp={todayTimestamp}
-        monthIndex={monthIndex}
-        selectedTimestamp={selectedTimestamp}
+    <Container>
+      <MainController
+        timestamp={selectedTimestamp}
+        interval={interval}
+        getNewTimestamp={({
+          timestamp,
+        }) => {
+          onDateClickHandler({
+            timestamp,
+          });
+        }}
       />
-    </DatePickerContainer>
+      <DatePickerContainer>
+        <DaysRow />
+        <DatesGrid
+          dateList={dateList}
+          onDateClickHandler={onDateClickHandler}
+          todayTimestamp={todayTimestamp}
+          monthIndex={monthIndex}
+          selectedTimestamp={selectedTimestamp}
+        />
+      </DatePickerContainer>
+    </Container>
   );
 }
 
