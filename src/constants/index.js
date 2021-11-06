@@ -1,9 +1,13 @@
-const IntervalMap = {
+const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000;
+const AMOUNT_IN_CALENDAR = 42;
+const NUMBER_OF_MONTH_IN_YEAR = 12;
+
+const INTERVAL_MAP = {
   day: 'day',
   month: 'month',
   year: 'year',
 };
-Object.freeze(IntervalMap);
+Object.freeze(INTERVAL_MAP);
 
 const NUMBER_TO_MONTH = {
   1: 'Jan',
@@ -22,6 +26,9 @@ const NUMBER_TO_MONTH = {
 Object.freeze(NUMBER_TO_MONTH);
 
 export {
-  IntervalMap,
+  INTERVAL_MAP,
   NUMBER_TO_MONTH,
+  DAY_IN_MILLISECONDS,
+  AMOUNT_IN_CALENDAR,
+  NUMBER_OF_MONTH_IN_YEAR,
 };

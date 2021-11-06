@@ -3,7 +3,7 @@ import styled, { ThemeProvider } from "styled-components";
 import DatesGrid from './DatesGrid';
 import MainController from './MainController';
 import MonthsGrid from './MonthsGrid';
-import { IntervalMap } from '../constants';
+import { INTERVAL_MAP } from '../constants';
 import {
   getTrimmedTodayTimestamp,
 } from '../utils';
@@ -31,7 +31,7 @@ const Container = styled.div`
 function DatePicker() {
   const todayTimestamp = getTrimmedTodayTimestamp();
   const [selectedTimestamp, setTimestamp] = useState(todayTimestamp);
-  const [interval, setInterval] = useState(IntervalMap.day);
+  const [interval, setInterval] = useState(INTERVAL_MAP.day);
 
   const content = (() => {
     const datesGridAbstract = (
@@ -42,18 +42,19 @@ function DatePicker() {
       />
     );
     switch (interval) {
-      case `${IntervalMap.day}`: {
+      case `${INTERVAL_MAP.day}`: {
         return datesGridAbstract;
       }
-      case `${IntervalMap.month}`: {
+      case `${INTERVAL_MAP.month}`: {
         return (
           <MonthsGrid
             timestamp={selectedTimestamp}
             setTimestamp={setTimestamp}
+            setInterval={setInterval}
           />
         );
       }
-      case `${IntervalMap.year}`: {
+      case `${INTERVAL_MAP.year}`: {
         return (
           <div>year</div>
         );

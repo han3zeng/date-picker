@@ -1,6 +1,8 @@
-const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000;
-const AMOUNT_IN_CALENDAR = 42;
-const NUMBER_OF_MONTH_IN_YEAR = 12;
+import {
+  DAY_IN_MILLISECONDS,
+  AMOUNT_IN_CALENDAR,
+  NUMBER_OF_MONTH_IN_YEAR,
+} from '../constants';
 
 const color = {
   light: 'light',
@@ -134,11 +136,16 @@ const getMonthListInYear = ({
   });
 };
 
+const getDaysOffsetInMonth = ({ timestamp }) => {
+  const dateObj = new Date(timestamp);
+  return dateObj.getDate() - 1;
+};
 
 export {
   getDateListOfMonth,
   getTrimmedTodayTimestamp,
   getEdgeDateInMonthTimestamp,
   getMonthListInYear,
-  getStartTimestampInYear
+  getStartTimestampInYear,
+  getDaysOffsetInMonth,
 };

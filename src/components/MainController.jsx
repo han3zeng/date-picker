@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { IntervalMap, NUMBER_TO_MONTH } from '../constants';
+import { INTERVAL_MAP, NUMBER_TO_MONTH } from '../constants';
 
 const Container = styled.div`
   width: 100%;
@@ -30,14 +30,14 @@ function onNextClickHandler({
   timestamp,
 }) {
   switch (interval) {
-    case `${IntervalMap.day}`:
+    case `${INTERVAL_MAP.day}`:
       return timestamp + 24 * 60 * 60 * 1000;
-    case `${IntervalMap.month}`: {
+    case `${INTERVAL_MAP.month}`: {
       const dateObj = new Date(timestamp);
       dateObj.setMonth(dateObj.getMonth() + 1);
       return dateObj.getTime();
     }
-    case `${IntervalMap.year}`: {
+    case `${INTERVAL_MAP.year}`: {
       const dateObj = new Date(timestamp);
       dateObj.setFullYear(dateObj.getFullYear() + 1);
       return dateObj.getTime();
@@ -52,14 +52,14 @@ function onPreivousClickHandler({
   timestamp,
 }) {
   switch (interval) {
-    case `${IntervalMap.day}`:
+    case `${INTERVAL_MAP.day}`:
       return timestamp - 24 * 60 * 60 * 1000;
-    case `${IntervalMap.month}`: {
+    case `${INTERVAL_MAP.month}`: {
       const dateObj = new Date(timestamp);
       dateObj.setMonth(dateObj.getMonth() - 1);
       return dateObj.getTime();
     }
-    case `${IntervalMap.year}`: {
+    case `${INTERVAL_MAP.year}`: {
       const dateObj = new Date(timestamp);
       dateObj.setFullYear(dateObj.getFullYear() - 1);
       return dateObj.getTime();
@@ -73,14 +73,14 @@ function onMainClickHandler({
   getNewInterval,
   interval,
 }) {
-  if (IntervalMap.day === interval) {
+  if (INTERVAL_MAP.day === interval) {
     getNewInterval({
-      interval: IntervalMap.month,
+      interval: INTERVAL_MAP.month,
     });
   }
-  if (IntervalMap.month === interval) {
+  if (INTERVAL_MAP.month === interval) {
     getNewInterval({
-      interval: IntervalMap.year,
+      interval: INTERVAL_MAP.year,
     });
   }
 }
@@ -95,15 +95,15 @@ function Content({
   const year = dateObj.getFullYear();
   let content = null;
   switch (interval) {
-    case `${IntervalMap.day}`: {
+    case `${INTERVAL_MAP.day}`: {
       content = (<div>{`${NUMBER_TO_MONTH[month]} ${year}`}</div>);
       break;
     }
-    case `${IntervalMap.month}`: {
+    case `${INTERVAL_MAP.month}`: {
       content = (<div>{`${year}`}</div>);
       break;
     }
-    case `${IntervalMap.year}`: {
+    case `${INTERVAL_MAP.year}`: {
       const upperBound = 9 - (year % 10) + year;
       const lowerBound = year - (year % 10);
       content = (<div>{`${lowerBound} - ${upperBound}`}</div>);

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import { getMonthListInYear, getStartTimestampInYear } from '../utils';
-import { NUMBER_TO_MONTH } from '../constants';
+import { getMonthListInYear, getStartTimestampInYear, getDaysOffsetInMonth } from '../utils';
+import { NUMBER_TO_MONTH, INTERVAL_MAP, DAY_IN_MILLISECONDS } from '../constants';
 import { DataBox } from './Commons';
 
 const Container = styled.div`
@@ -22,11 +22,11 @@ const GridItem = styled.div`
 function Month({
   selected,
   month,
-  setTimestamp
+  onClickHandler
 }) {
   return (
     <GridItem
-      onClick={setTimestamp}
+      onClick={onClickHandler}
     >
       <DataBox
         colorType="dark"
@@ -44,7 +44,8 @@ const MonthComp = React.memo(Month)
 
 function MonthsGrid({
   setTimestamp,
-  timestamp
+  setInterval,
+  timestamp,
 }) {
   const yearIndex = getStartTimestampInYear({ timestamp });
   const monthList = useMemo(() => getMonthListInYear({ timestamp }), [ yearIndex ]);
@@ -56,8 +57,12 @@ function MonthsGrid({
       key={`${startTimestamp}-${endTimestamp}`}
       selected={startTimestamp <= timestamp && timestamp <= endTimestamp}
       month={index + 1}
-      setTimestamp={() => {
-        setTimestamp(startTimestamp);
+      onClickHandler={() => {
+        const targetTimestamp = startTimestamp + getDaysOffsetInMonth({
+          timestamp,
+        }) * DAY_IN_MILLISECONDS;
+        setTimestamp(targetTimestamp);
+        setInterval(INTERVAL_MAP.day);
       }}
     />
   ));
