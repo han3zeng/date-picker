@@ -59,6 +59,7 @@ function MonthsGrid({
       month={index + 1}
       onClickHandler={() => {
         const targetTimestamp = startTimestamp + getDaysOffsetInMonth({
+          endTimestamp,
           timestamp,
         }) * DAY_IN_MILLISECONDS;
         setTimestamp(targetTimestamp);

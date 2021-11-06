@@ -136,9 +136,11 @@ const getMonthListInYear = ({
   });
 };
 
-const getDaysOffsetInMonth = ({ timestamp }) => {
-  const dateObj = new Date(timestamp);
-  return dateObj.getDate() - 1;
+const getDaysOffsetInMonth = ({ timestamp, endTimestamp }) => {
+  const selectedDateOffset = new Date(timestamp).getDate();
+  const lastDateInMonth = new Date(endTimestamp).getDate();
+  const offset = selectedDateOffset < lastDateInMonth ? selectedDateOffset : lastDateInMonth;
+  return offset - 1;
 };
 
 export {
