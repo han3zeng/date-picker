@@ -1,21 +1,25 @@
 import styled from 'styled-components';
 
-const GridItem = styled.div`
+const DataBox = styled.div`
+  height: 30px;
+  width: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  box-sizing: border-box;
   color: ${(props) => {
     if (props.selected) {
       return 'white';
     }
     if (props.isToday) {
-      return '#db3d44';
+      return `${props.theme.highlight}`;
     }
-    return props.colorType === 'light' ? '#cbcbcb' : '#333333';
+    return props.colorType === 'light' ? `${props.theme.textLight}` : `${props.theme.textNormal}`;
   }};
+  border-radius: 50%;
+  background-color: ${(props) => (props.selected ? `${props.theme.highlight}` : 'initial')};
 `;
 
 export {
-  GridItem,
+  DataBox,
 };

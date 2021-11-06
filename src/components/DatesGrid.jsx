@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import { GridItem } from './Commons';
 import DaysRow from './DaysRow';
+import { DataBox } from './Commons';
 import {
   getDateListOfMonth,
   getEdgeDateInMonthTimestamp,
@@ -15,25 +15,13 @@ const Container = styled.div`
   gap: 5px;
 `;
 
-const Date = styled.div`
-  height: 30px;
-  width: 30px;
+const GridItem = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;
-  color: ${(props) => {
-    if (props.selected) {
-      return 'white';
-    }
-    if (props.isToday) {
-      return '#db3d44';
-    }
-    return props.colorType === 'light' ? '#cbcbcb' : '#333333';
-  }};
-  border-radius: 50%;
-  background-color: ${(props) => (props.selected ? '#db3d44' : 'initial')};
+  cursor: pointer;
 `;
+
 
 function areEqual(prevProps, nextProps) {
   if (prevProps.monthIndex !== nextProps.monthIndex) {
@@ -53,29 +41,27 @@ const DateElement = React.memo(({
   color,
   isToday,
   date,
-  onDateClickHandler,
+  setTimestamp,
   monthIndex,
   selected,
 }) => (
   <GridItem
     onClick={() => {
-      onDateClickHandler({
-        timestamp,
-      });
+      setTimestamp(timestamp);
     }}
   >
-    <Date
+    <DataBox
       colorType={color}
       selected={selected}
       isToday={isToday}
     >
       {date}
-    </Date>
+    </DataBox>
   </GridItem>
 ), areEqual);
 
 const Grid = ({
-  onDateClickHandler,
+  setTimestamp,
   todayTimestamp,
   selectedTimestamp,
 }) => {
@@ -98,7 +84,7 @@ const Grid = ({
       date={date}
       timestamp={timestamp}
       color={color}
-      onDateClickHandler={onDateClickHandler}
+      setTimestamp={setTimestamp}
       todayTimestamp={todayTimestamp}
       monthIndex={monthIndex}
       selected={selectedTimestamp === timestamp}
@@ -108,7 +94,7 @@ const Grid = ({
 };
 
 function DatesGrid({
-  onDateClickHandler,
+  setTimestamp,
   todayTimestamp,
   selectedTimestamp
 }) {
@@ -116,7 +102,7 @@ function DatesGrid({
     <Container>
       <DaysRow />
       <Grid
-        onDateClickHandler={onDateClickHandler}
+        setTimestamp={setTimestamp}
         todayTimestamp={todayTimestamp}
         selectedTimestamp={selectedTimestamp}
       />

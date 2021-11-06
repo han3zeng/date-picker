@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GridItem } from './Commons';
+
+const GridItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Day = styled.div`
   color: black;

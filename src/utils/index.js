@@ -1,5 +1,6 @@
 const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000;
 const AMOUNT_IN_CALENDAR = 42;
+const NUMBER_OF_MONTH_IN_YEAR = 12;
 
 const color = {
   light: 'light',
@@ -12,7 +13,7 @@ const dateTimestampTrimmer = ({ timestamp }) => {
   return DateObj?.getTime();
 };
 
-const getTrimmedTodayTimestamp = () => dateTimestampTrimmer({ timestamp: Date?.now() })
+const getTrimmedTodayTimestamp = () => dateTimestampTrimmer({ timestamp: Date?.now() });
 
 const getEdgeDateInMonthTimestamp = ({
   timestamp,
@@ -98,8 +99,46 @@ const getDateListOfMonth = ({ selectedTimestamp }) => {
   // }
 };
 
+const getDaysInMonth = ({
+  timestamp,
+}) => {
+  const dateObj = new Date(timestamp);
+  const year = dateObj.getFullYear();
+  const month = dateObj.getMonth();
+  return new Date(year, month + 1, 0).getDate();
+};
+
+const getStartTimestampInYear = ({
+  timestamp,
+}) => {
+  const dateObj = new Date(timestamp);
+  const year = dateObj.getFullYear();
+  return new Date(year, 0, 1).getTime();
+};
+
+const getMonthListInYear = ({
+  timestamp,
+}) => {
+  const list = new Array(NUMBER_OF_MONTH_IN_YEAR).fill(0);
+  const startTimestampInYear = getStartTimestampInYear({ timestamp });
+  let startTimestamp = startTimestampInYear;
+  return list.map(() => {
+    const interval = getDaysInMonth({ timestamp: startTimestamp }) - 1;
+    const endTimestamp = startTimestamp + interval * DAY_IN_MILLISECONDS;
+    const monthData = {
+      startTimestamp,
+      endTimestamp,
+    };
+    startTimestamp = endTimestamp + DAY_IN_MILLISECONDS;
+    return monthData;
+  });
+};
+
+
 export {
   getDateListOfMonth,
   getTrimmedTodayTimestamp,
   getEdgeDateInMonthTimestamp,
+  getMonthListInYear,
+  getStartTimestampInYear
 };

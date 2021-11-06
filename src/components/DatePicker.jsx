@@ -1,19 +1,19 @@
 import React, { useState, useMemo } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from "styled-components";
 import DatesGrid from './DatesGrid';
 import MainController from './MainController';
+import MonthsGrid from './MonthsGrid';
 import { IntervalMap } from '../constants';
 import {
   getTrimmedTodayTimestamp,
 } from '../utils';
 
-// const DMYSContainer = styled.div`
-//   background-color: #f5f5f5;
-// `;
-
-// function DayMonthYearSelector() {
-//   return <DMYSContainer />;
-// }
+const theme = {
+  highlight: '#db3d44',
+  textLight: '#cbcbcb',
+  textNormal: '#333333',
+  fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
+};
 
 const Container = styled.div`
   width: 100%;
@@ -25,6 +25,7 @@ const Container = styled.div`
   border-radius: 3px;
   padding: 15px;
   box-sizing: border-box;
+  font-family: ${(props) => props.theme.fontFamily};
 `;
 
 function DatePicker() {
@@ -32,24 +33,24 @@ function DatePicker() {
   const [selectedTimestamp, setTimestamp] = useState(todayTimestamp);
   const [interval, setInterval] = useState(IntervalMap.day);
 
-  const onDateClickHandler = ({ timestamp }) => {
-    setTimestamp(timestamp);
-  };
-
   const content = (() => {
+    const datesGridAbstract = (
+      <DatesGrid
+        setTimestamp={setTimestamp}
+        todayTimestamp={todayTimestamp}
+        selectedTimestamp={selectedTimestamp}
+      />
+    );
     switch (interval) {
       case `${IntervalMap.day}`: {
-        return (
-          <DatesGrid
-            onDateClickHandler={onDateClickHandler}
-            todayTimestamp={todayTimestamp}
-            selectedTimestamp={selectedTimestamp}
-          />
-        );
+        return datesGridAbstract;
       }
       case `${IntervalMap.month}`: {
         return (
-          <div>month</div>
+          <MonthsGrid
+            timestamp={selectedTimestamp}
+            setTimestamp={setTimestamp}
+          />
         );
       }
       case `${IntervalMap.year}`: {
@@ -58,40 +59,33 @@ function DatePicker() {
         );
       }
       default: {
-        return (
-          <DatePickerContainer>
-            <DaysRow />
-            <DatesGrid
-              onDateClickHandler={onDateClickHandler}
-              todayTimestamp={todayTimestamp}
-              selectedTimestamp={selectedTimestamp}
-            />
-          </DatePickerContainer>
-        );
+        return datesGridAbstract;
       }
     }
   })();
 
   return (
-    <Container>
-      <MainController
-        timestamp={selectedTimestamp}
-        interval={interval}
-        getNewTimestamp={({
-          timestamp,
-        }) => {
-          onDateClickHandler({
+    <ThemeProvider
+      theme={theme}
+    >
+      <Container>
+        <MainController
+          timestamp={selectedTimestamp}
+          interval={interval}
+          getNewTimestamp={({
             timestamp,
-          });
-        }}
-        getNewInterval={({
-          interval,
-        }) => {
-          setInterval(interval);
-        }}
-      />
-      {content}
-    </Container>
+          }) => {
+            setTimestamp(timestamp);
+          }}
+          getNewInterval={({
+            interval,
+          }) => {
+            setInterval(interval);
+          }}
+        />
+        {content}
+      </Container>
+    </ThemeProvider>
   );
 }
 
