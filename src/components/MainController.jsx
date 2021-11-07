@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { INTERVAL_MAP, NUMBER_TO_MONTH } from '../constants';
+import { getProperMonthInterval } from '../utils';
 
 const Container = styled.div`
   width: 100%;
@@ -30,16 +31,20 @@ function onNextClickHandler({
   timestamp,
 }) {
   switch (interval) {
-    case `${INTERVAL_MAP.day}`:
-      return timestamp + 24 * 60 * 60 * 1000;
+    case `${INTERVAL_MAP.day}`: {
+      return getProperMonthInterval({
+        timestamp,
+        operaction: 'increment',
+      });
+    }
     case `${INTERVAL_MAP.month}`: {
       const dateObj = new Date(timestamp);
-      dateObj.setMonth(dateObj.getMonth() + 1);
+      dateObj.setFullYear(dateObj.getFullYear() + 1);
       return dateObj.getTime();
     }
     case `${INTERVAL_MAP.year}`: {
       const dateObj = new Date(timestamp);
-      dateObj.setFullYear(dateObj.getFullYear() + 1);
+      dateObj.setFullYear(dateObj.getFullYear() + 10);
       return dateObj.getTime();
     }
     default:
@@ -52,16 +57,20 @@ function onPreivousClickHandler({
   timestamp,
 }) {
   switch (interval) {
-    case `${INTERVAL_MAP.day}`:
-      return timestamp - 24 * 60 * 60 * 1000;
+    case `${INTERVAL_MAP.day}`: {
+      return getProperMonthInterval({
+        timestamp,
+        operation: 'decrement',
+      });
+    }
     case `${INTERVAL_MAP.month}`: {
       const dateObj = new Date(timestamp);
-      dateObj.setMonth(dateObj.getMonth() - 1);
+      dateObj.setFullYear(dateObj.getFullYear() - 1);
       return dateObj.getTime();
     }
     case `${INTERVAL_MAP.year}`: {
       const dateObj = new Date(timestamp);
-      dateObj.setFullYear(dateObj.getFullYear() - 1);
+      dateObj.setFullYear(dateObj.getFullYear() - 10);
       return dateObj.getTime();
     }
     default:

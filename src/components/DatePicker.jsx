@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import styled, { ThemeProvider } from "styled-components";
+import React, { useState } from 'react';
+import styled, { ThemeProvider } from 'styled-components';
 import DatesGrid from './DatesGrid';
 import MainController from './MainController';
 import MonthsGrid from './MonthsGrid';

@@ -83,22 +83,6 @@ const getDateListOfMonth = ({ selectedTimestamp }) => {
     };
     return data;
   });
-  // for (let i = 0; i < 6; i += 1) {
-  //   const row = [];
-  //   for (let j = 0; j < 7; j += 1) {
-  //     const timestamp = startTimestamp + (i * 7 + j) * DAY_IN_MILLISECONDS;
-  //     const data = {
-  //       timestamp,
-  //       date: new Date(timestamp).getDate(),
-  //       color:
-  //         firstDateInMonthTimestamp <= timestamp && timestamp <= lastDateInMonthTimestamp
-  //           ? color.dark
-  //           : color.light,
-  //     };
-  //     row.push(data);
-  //   }
-  //   list.push(row);
-  // }
 };
 
 const getDaysInMonth = ({
@@ -143,6 +127,22 @@ const getDaysOffsetInMonth = ({ timestamp, endTimestamp }) => {
   return offset - 1;
 };
 
+const getProperMonthInterval = ({
+  timestamp,
+  operation = 'increment',
+}) => {
+  const selectedDateObj = new Date(timestamp);
+  const year = selectedDateObj.getFullYear();
+  const month = selectedDateObj.getMonth();
+  const targetMonth = operation === 'increment' ? month + 1 : month - 1;
+  const targetDateBaseObj = new Date(year, targetMonth, 1);
+  const selectedDateOffset = new Date(timestamp).getDate();
+  const daysInTargetMonth = getDaysInMonth({ timestamp: targetDateBaseObj.getTime() });
+  return daysInTargetMonth < selectedDateOffset
+    ? targetDateBaseObj.setDate(daysInTargetMonth)
+    : selectedDateObj.setMonth(targetMonth);
+};
+
 export {
   getDateListOfMonth,
   getTrimmedTodayTimestamp,
@@ -150,4 +150,5 @@ export {
   getMonthListInYear,
   getStartTimestampInYear,
   getDaysOffsetInMonth,
+  getProperMonthInterval,
 };
