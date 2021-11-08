@@ -9,6 +9,22 @@ const color = {
   dark: 'dark',
 };
 
+const isLeapYear = ({ timestamp }) => {
+  const date = new Date(timestamp);
+  const year = date.getFullYear();
+  if ((year % 4 === 0 && year % 100 !== 0) || (year % 100 === 0 && year % 400 === 0)) {
+    return true;
+  }
+  return false;
+};
+
+const getMillisecondsOfAYear = ({ timestamp }) => {
+  if (isLeapYear({ timestamp })) {
+    return 366 * DAY_IN_MILLISECONDS;
+  }
+  return 365 * DAY_IN_MILLISECONDS;
+};
+
 const dateTimestampTrimmer = ({ timestamp }) => {
   const DateObj = new Date(timestamp);
   DateObj?.setHours(0, 0, 0, 0);
@@ -143,6 +159,68 @@ const getProperMonthInterval = ({
     : selectedDateObj.setMonth(targetMonth);
 };
 
+const getEdgeTimestampsInTenYears = ({
+  timestamp,
+}) => {
+  const dateObj = new Date(timestamp);
+  const year = dateObj.getFullYear();
+  const lowerBound = year - (year % 10);
+  const upperBound = 9 - (year % 10) + year;
+  const lowerBoundTimestamp = new Date(lowerBound, 0, 1).getTime();
+  const upperBoundDateTimestamp = new Date(upperBound, 0, 1).getTime();
+  return {
+    lowerBoundTimestamp,
+    upperBoundDateTimestamp,
+  };
+};
+
+const getStartTimestampInTenYear = ({
+  timestamp,
+  numberOfItems,
+}) => {
+  const dateObj = new Date(timestamp);
+  const year = dateObj.getFullYear();
+  const lowerBound = year - (year % 10);
+  const lowerBoundTimestamp = new Date(lowerBound, 0, 1).getTime();
+  const difference = numberOfItems - 10;
+  if (difference <= 0) {
+    return lowerBoundTimestamp;
+  }
+  const interval = Math.ceil(difference / 2);
+  return {
+    startTimestamp: new Date(lowerBound - interval, 0, 1).getTime(),
+  };
+};
+
+const getYearListInTenYears = ({
+  timestamp,
+}) => {
+  const NUMBER_OF_ITEMS = 12;
+  const list = new Array(NUMBER_OF_ITEMS).fill(0);
+  const {
+    lowerBoundTimestamp,
+    upperBoundDateTimestamp,
+  } = getEdgeTimestampsInTenYears({ timestamp });
+  const { startTimestamp } = getStartTimestampInTenYear({
+    timestamp,
+    numberOfItems: NUMBER_OF_ITEMS,
+  });
+  // const dateObj = new Date(timestamp);
+  // const year = dateObj.getFullYear();
+  // const lowerBoundYear = year - (year % 10);
+  const startYear = new Date(startTimestamp).getFullYear();
+  return list.map((elem, index) => {
+    const targetTimestamp = new Date(startYear + index, 0, 1).getTime();
+    return {
+      color: lowerBoundTimestamp <= targetTimestamp && targetTimestamp <= upperBoundDateTimestamp
+        ? color.dark
+        : color.light,
+      year: startYear + index,
+      timestamp: targetTimestamp,
+    };
+  });
+};
+
 export {
   getDateListOfMonth,
   getTrimmedTodayTimestamp,
@@ -151,4 +229,6 @@ export {
   getStartTimestampInYear,
   getDaysOffsetInMonth,
   getProperMonthInterval,
+  getEdgeTimestampsInTenYears,
+  getYearListInTenYears,
 };

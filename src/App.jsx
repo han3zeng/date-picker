@@ -1,6 +1,6 @@
 import React from 'react';
-import DatePicker from './components/DatePicker';
 import styled from 'styled-components';
+import DatePicker from './components/DatePicker';
 
 
 const WrapperContainer = styled.div`
