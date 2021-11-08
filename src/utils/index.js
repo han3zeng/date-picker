@@ -205,9 +205,6 @@ const getYearListInTenYears = ({
     timestamp,
     numberOfItems: NUMBER_OF_ITEMS,
   });
-  // const dateObj = new Date(timestamp);
-  // const year = dateObj.getFullYear();
-  // const lowerBoundYear = year - (year % 10);
   const startYear = new Date(startTimestamp).getFullYear();
   return list.map((elem, index) => {
     const targetTimestamp = new Date(startYear + index, 0, 1).getTime();

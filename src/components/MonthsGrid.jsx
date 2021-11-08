@@ -6,7 +6,6 @@ import { DataBox } from './Commons';
 
 const Container = styled.div`
   width: 100%;
-  height: 90%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 30px 5px;
@@ -59,10 +58,13 @@ function MonthsGrid({
       selected={startTimestamp <= timestamp && timestamp <= endTimestamp}
       month={index + 1}
       onClickHandler={() => {
-        const targetTimestamp = startTimestamp + getDaysOffsetInMonth({
+        const offset = getDaysOffsetInMonth({
           endTimestamp,
           timestamp,
         }) * DAY_IN_MILLISECONDS;
+        const targetTimestamp = startTimestamp + offset;
+        console.log('startTimestamp: ', startTimestamp)
+        console.log('offset: ', offset)
         setTimestamp(targetTimestamp);
         setInterval(INTERVAL_MAP.day);
       }}

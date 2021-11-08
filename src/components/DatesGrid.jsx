@@ -9,7 +9,6 @@ import {
 
 const Container = styled.div`
   width: 100%;
-  height: 90%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: 20px 1px;
@@ -88,7 +87,8 @@ const Grid = ({
       setTimestamp={setTimestamp}
       todayTimestamp={todayTimestamp}
       monthIndex={monthIndex}
-      selected={selectedTimestamp === timestamp}
+      selected={(timestamp <= selectedTimestamp)
+        && (selectedTimestamp <= timestamp + 23 * 60 * 60 * 1000 + 59 * 60 * 1000)}
       isToday={todayTimestamp === timestamp}
     />
   ));

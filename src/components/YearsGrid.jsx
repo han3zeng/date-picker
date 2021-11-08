@@ -10,7 +10,6 @@ import { DataBox } from './Commons';
 
 const Container = styled.div`
   width: 100%;
-  height: 90%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px 5px;
