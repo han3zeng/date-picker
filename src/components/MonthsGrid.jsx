@@ -8,7 +8,7 @@ const Container = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 30px 5px;
+  gap: ${(props) => props.gap || '30px 5px'};
 `;
 
 const GridItem = styled.div`
@@ -46,6 +46,7 @@ function MonthsGrid({
   setTimestamp,
   setInterval,
   timestamp,
+  gap,
 }) {
   const yearIndex = getStartTimestampInYear({ timestamp });
   const monthList = useMemo(() => getMonthListInYear({ timestamp }), [ yearIndex ]);
@@ -63,15 +64,15 @@ function MonthsGrid({
           timestamp,
         }) * DAY_IN_MILLISECONDS;
         const targetTimestamp = startTimestamp + offset;
-        console.log('startTimestamp: ', startTimestamp)
-        console.log('offset: ', offset)
         setTimestamp(targetTimestamp);
         setInterval(INTERVAL_MAP.day);
       }}
     />
   ));
   return (
-    <Container>
+    <Container
+      gap={gap}
+    >
       {content}
     </Container>
   );

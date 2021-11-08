@@ -27,9 +27,14 @@ const Container = styled.div`
   font-size: 16px;
 `;
 
-function DatePicker() {
+function DatePicker({
+  onSelect,
+  timestamp,
+  gap,
+}) {
   const todayTimestamp = getTrimmedTodayTimestamp();
-  const [selectedTimestamp, setTimestamp] = useState(todayTimestamp);
+  const initialTimestamp = timestamp || todayTimestamp;
+  const [selectedTimestamp, setTimestamp] = useState(initialTimestamp);
   const [interval, setInterval] = useState(INTERVAL_MAP.day);
 
   const content = (() => {
@@ -38,6 +43,8 @@ function DatePicker() {
         setTimestamp={setTimestamp}
         todayTimestamp={todayTimestamp}
         selectedTimestamp={selectedTimestamp}
+        gap={gap.datesGridGap}
+        onSelect={onSelect}
       />
     );
     switch (interval) {
@@ -50,6 +57,7 @@ function DatePicker() {
             timestamp={selectedTimestamp}
             setTimestamp={setTimestamp}
             setInterval={setInterval}
+            gap={gap.monthsGridGap}
           />
         );
       }
@@ -59,6 +67,7 @@ function DatePicker() {
             timestamp={selectedTimestamp}
             setTimestamp={setTimestamp}
             setInterval={setInterval}
+            gap={gap.YearsGridGap}
           />
         );
       }
@@ -77,14 +86,14 @@ function DatePicker() {
           timestamp={selectedTimestamp}
           interval={interval}
           getNewTimestamp={({
-            timestamp,
+            timestamp: newTimestamp,
           }) => {
-            setTimestamp(timestamp);
+            setTimestamp(newTimestamp);
           }}
           getNewInterval={({
-            interval,
+            interval: newInterval,
           }) => {
-            setInterval(interval);
+            setInterval(newInterval);
           }}
         />
         {content}

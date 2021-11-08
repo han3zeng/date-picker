@@ -11,7 +11,7 @@ const Container = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  gap: 20px 1px;
+  gap: ${(props) => props.gap || '20px 5px'};
 `;
 
 const GridItem = styled.div`
@@ -43,10 +43,13 @@ const DateElement = React.memo(({
   setTimestamp,
   monthIndex,
   selected,
+  onSelect,
 }) => (
   <GridItem
     onClick={() => {
-      setTimestamp(timestamp);
+      onSelect({
+        timestamp,
+      });
     }}
   >
     <DataBox
@@ -64,6 +67,7 @@ const Grid = ({
   setTimestamp,
   todayTimestamp,
   selectedTimestamp,
+  onSelect,
 }) => {
   const monthIndex = getEdgeDateInMonthTimestamp({
     timestamp: selectedTimestamp,
@@ -90,6 +94,7 @@ const Grid = ({
       selected={(timestamp <= selectedTimestamp)
         && (selectedTimestamp <= timestamp + 23 * 60 * 60 * 1000 + 59 * 60 * 1000)}
       isToday={todayTimestamp === timestamp}
+      onSelect={onSelect}
     />
   ));
 };
@@ -97,15 +102,20 @@ const Grid = ({
 function DatesGrid({
   setTimestamp,
   todayTimestamp,
-  selectedTimestamp
+  selectedTimestamp,
+  gap,
+  onSelect,
 }) {
   return (
-    <Container>
+    <Container
+      gap={gap}
+    >
       <DaysRow />
       <Grid
         setTimestamp={setTimestamp}
         todayTimestamp={todayTimestamp}
         selectedTimestamp={selectedTimestamp}
+        onSelect={onSelect}
       />
     </Container>
   );

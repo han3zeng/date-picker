@@ -12,7 +12,7 @@ const Container = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 20px 5px;
+  gap: ${(props) => props.gap || '20px 5px'};
 `;
 
 const GridItem = styled.div`
@@ -50,6 +50,7 @@ function YearsGrid({
   setTimestamp,
   setInterval,
   timestamp: selectedTimestamp,
+  gap,
 }) {
   const {
     lowerBoundTimestamp,
@@ -86,7 +87,9 @@ function YearsGrid({
     );
   });
   return (
-    <Container>
+    <Container
+      gap={gap}
+    >
       {content}
     </Container>
   );
