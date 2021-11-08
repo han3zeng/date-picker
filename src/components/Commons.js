@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 const DataBox = styled.div`
-  height: 30px;
-  width: 30px;
+  height: ${(props) => props.size || '40px'};
+  width: ${(props) => props.size || '40px'};
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;

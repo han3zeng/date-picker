@@ -19,14 +19,13 @@ const theme = {
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  max-width: 600px;
-  max-height: 500px;
   border: 1px solid #c8c8c8;
   box-shadow: 0px 2px 3px #c8c8c8;
   border-radius: 3px;
-  padding: 15px;
+  padding: 18px 13px;
   box-sizing: border-box;
   font-family: ${(props) => props.theme.fontFamily};
+  font-size: 16px;
 `;
 
 function DatePicker() {

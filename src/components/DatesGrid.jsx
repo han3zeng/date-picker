@@ -12,14 +12,14 @@ const Container = styled.div`
   height: 90%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  gap: 5px;
+  gap: 20px 1px;
 `;
 
 const GridItem = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
   cursor: pointer;
+  justify-content: center;
 `;
 
 
@@ -54,6 +54,7 @@ const DateElement = React.memo(({
       colorType={color}
       selected={selected}
       isToday={isToday}
+      size="35px"
     >
       {date}
     </DataBox>

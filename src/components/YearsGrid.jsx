@@ -13,7 +13,7 @@ const Container = styled.div`
   height: 90%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 5px;
+  gap: 20px 5px;
 `;
 
 const GridItem = styled.div`
@@ -37,6 +37,7 @@ function Year({
         colorType={color}
         selected={selected}
         isToday={false}
+        size="55px"
       >
         {year}
       </DataBox>

@@ -10,6 +10,7 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 10%;
+  margin-bottom: 30px;
 `;
 
 const Arrow = styled.div`

@@ -9,7 +9,7 @@ const Container = styled.div`
   height: 90%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 5px;
+  gap: 30px 5px;
 `;
 
 const GridItem = styled.div`
@@ -32,11 +32,12 @@ function Month({
         colorType="dark"
         selected={selected}
         isToday={false}
+        size="45px"
       >
         {NUMBER_TO_MONTH[month]}
       </DataBox>
     </GridItem>
-  )
+  );
 }
 
 const MonthComp = React.memo(Month)
