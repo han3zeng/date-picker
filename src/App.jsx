@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import PropTypes from 'prop-types';
 import DatePicker from './components/DatePicker';
 import {
   debounce,
@@ -67,19 +68,27 @@ const InputField = styled.input`
   }
 `;
 
-function App() {
-  const [selectedTimestamp, setTimestamp] = useState(getTrimmedTodayTimestamp());
+function App({
+  onSelect,
+  initialTimestamp,
+  gap,
+}) {
+  const [selectedTimestamp, setTimestamp] = useState(initialTimestamp);
   const [ifShowModal, toggleModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const inputEl = useRef(null);
 
-  const onSelectHandler = ({
+  const onSetTimestampHandler = ({
     timestamp,
     toClose = false,
   }) => {
     setTimestamp(timestamp);
-    inputEl.current.value = timestampToDateString({ timestamp });
+    const representativeString = timestampToDateString({ timestamp });
+    inputEl.current.value = representativeString;
+    onSelect({
+      value: representativeString,
+    });
     if (ifShowModal && toClose) {
       toggleModal(false);
     }
@@ -130,15 +139,9 @@ function App() {
             >
               <DatePicker
                 arial-label="DatePicker"
-                onSelect={onSelectHandler}
+                setTimestamp={onSetTimestampHandler}
                 timestamp={selectedTimestamp}
-                gap={
-                  {
-                    datesGridGap: undefined,
-                    monthsGridGap: undefined,
-                    YearsGridGap: undefined,
-                  }
-                }
+                gap={gap}
               />
             </DatePickerContainer>
           )}
@@ -146,5 +149,27 @@ function App() {
     </ThemeProvider>
   );
 }
+
+const defaultGap = {
+  datesGridGap: undefined,
+  monthsGridGap: undefined,
+  yearsGridGap: undefined,
+};
+
+App.defaultProps = {
+  onSelect: ({ value }) => { console.log(value); },
+  initialTimestamp: getTrimmedTodayTimestamp(),
+  gap: defaultGap,
+};
+
+App.propTypes = {
+  onSelect: PropTypes.func,
+  initialTimestamp: PropTypes.number,
+  gap: PropTypes.shape({
+    datesGridGap: PropTypes.string,
+    monthsGridGap: PropTypes.string,
+    yearsGridGap: PropTypes.string,
+  }),
+};
 
 export default App;

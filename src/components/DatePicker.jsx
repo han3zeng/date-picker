@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import DatesGrid from './DatesGrid';
 import MainController from './MainController';
@@ -19,7 +19,7 @@ const Container = styled.div`
 `;
 
 function DatePicker({
-  onSelect,
+  setTimestamp,
   timestamp,
   gap,
 }) {
@@ -29,7 +29,7 @@ function DatePicker({
   const content = (() => {
     const datesGridAbstract = (
       <DatesGrid
-        setTimestamp={onSelect}
+        setTimestamp={setTimestamp}
         todayTimestamp={todayTimestamp}
         selectedTimestamp={timestamp}
         gap={gap.datesGridGap}
@@ -43,7 +43,7 @@ function DatePicker({
         return (
           <MonthsGrid
             timestamp={timestamp}
-            setTimestamp={onSelect}
+            setTimestamp={setTimestamp}
             setInterval={setInterval}
             gap={gap.monthsGridGap}
           />
@@ -53,9 +53,9 @@ function DatePicker({
         return (
           <YearsGrid
             timestamp={timestamp}
-            setTimestamp={onSelect}
+            setTimestamp={setTimestamp}
             setInterval={setInterval}
-            gap={gap.YearsGridGap}
+            gap={gap.yearsGridGap}
           />
         );
       }
@@ -73,7 +73,7 @@ function DatePicker({
         getNewTimestamp={({
           timestamp: newTimestamp,
         }) => {
-          onSelect({
+          setTimestamp({
             timestamp: newTimestamp,
           });
         }}
