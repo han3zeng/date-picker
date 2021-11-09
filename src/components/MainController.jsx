@@ -13,13 +13,21 @@ const Container = styled.div`
 `;
 
 const Arrow = styled.div`
-  border: solid black;
-  border-width: 0 2px 2px 0;
-  display: inline-block;
-  padding: 4px;
-  margin: 0 3px;
+  position: relative;
   cursor: pointer;
-  transform: ${(props) => (props.left ? 'rotate(135deg)' : 'rotate(-45deg)')};
+  height: 25px;
+  width: 25px;
+  &: after {
+    content: "";
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 4px;
+    position: absolute;
+    top: 50%;
+    left : 50%;
+    transform: ${(props) => (props.left ? 'translate(-50%, -50%) rotate(135deg)' : 'translate(-50%, -50%) rotate(-45deg)')};
+  }
 `;
 
 const Info = styled.div`

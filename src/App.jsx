@@ -23,13 +23,13 @@ const getFormattedNumber = ({
 };
 
 function App() {
-  const [selectedTimestamp, setTimestamp] = useState(new Date('2009-01-03 00:00:00'));
+  const [selectedTimestamp, setTimestamp] = useState(new Date('2009-01-03 00:00:00').getTime());
 
   const onSelectHandler = ({
     timestamp,
   }) => {
     setTimestamp(timestamp);
-  };
+  }
 
   return (
     <WrapperContainer>
