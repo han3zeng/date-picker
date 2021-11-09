@@ -1,10 +1,12 @@
 {
-  "name": "date-picker",
+  "name": "react-styled-date-picker",
   "version": "1.0.0",
   "description": "the react date picker for community",
   "main": "index.js",
   "scripts": {
     "dev": "BABEL_ENV=development webpack-dev-server --config webpack.config.dev.js",
+    "build": "webpack --config webpack.config.prod.js",
+    "publish:customized": "cp ./package.json ./dist && cd ./dist && npm publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,7 +25,7 @@
     "url": "https://github.com/han3zeng/date-picker/issues"
   },
   "homepage": "https://github.com/han3zeng/date-picker#readme",
-  "dependencies": {
+  "peerDependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "styled-components": "^5.3.3"
