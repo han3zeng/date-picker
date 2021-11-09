@@ -218,6 +218,38 @@ const getYearListInTenYears = ({
   });
 };
 
+const getFormattedNumber = ({
+  number,
+}) => {
+  if (Number.isNaN(number)) {
+    return undefined;
+  }
+  if (number < 10) {
+    return `0${number}`;
+  }
+  return number;
+};
+
+const timestampToDateString = ({
+  timestamp,
+}) => {
+  const dateObj = new Date(timestamp);
+  const year = dateObj.getFullYear();
+  const month = getFormattedNumber({ number: dateObj.getMonth() + 1 });
+  const date = getFormattedNumber({ number: dateObj.getDate() });
+  return `${year}-${month}-${date}`;
+};
+
+function debounce(fn, interval) {
+  let timer;
+  return function decorator(...args) {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => fn.apply(this, args), interval);
+  };
+}
+
 export {
   getDateListOfMonth,
   getTrimmedTodayTimestamp,
@@ -228,4 +260,7 @@ export {
   getProperMonthInterval,
   getEdgeTimestampsInTenYears,
   getYearListInTenYears,
+  getFormattedNumber,
+  debounce,
+  timestampToDateString,
 };

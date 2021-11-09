@@ -8,7 +8,7 @@ const Container = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: ${(props) => props.gap || '30px 5px'};
+  gap: ${(props) => props.gap || '30px 20px'};
 `;
 
 const GridItem = styled.div`
@@ -64,7 +64,9 @@ function MonthsGrid({
           timestamp,
         }) * DAY_IN_MILLISECONDS;
         const targetTimestamp = startTimestamp + offset;
-        setTimestamp(targetTimestamp);
+        setTimestamp({
+          timestamp: targetTimestamp,
+        });
         setInterval(INTERVAL_MAP.day);
       }}
     />

@@ -12,7 +12,7 @@ const Container = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: ${(props) => props.gap || '20px 5px'};
+  gap: ${(props) => props.gap || '20px 10px'};
 `;
 
 const GridItem = styled.div`
@@ -80,7 +80,9 @@ function YearsGrid({
           const targetMonth = baseDate.getMonth();
           const targetDate = baseDate.getDate();
           const result = new Date(targetYear, targetMonth, targetDate).getTime();
-          setTimestamp(result);
+          setTimestamp({
+            timestamp: result,
+          });
           setInterval(INTERVAL_MAP.month);
         }}
       />

@@ -43,12 +43,12 @@ const DateElement = React.memo(({
   setTimestamp,
   monthIndex,
   selected,
-  onSelect,
 }) => (
   <GridItem
     onClick={() => {
-      onSelect({
+      setTimestamp({
         timestamp,
+        toClose: true,
       });
     }}
   >
@@ -67,7 +67,6 @@ const Grid = ({
   setTimestamp,
   todayTimestamp,
   selectedTimestamp,
-  onSelect,
 }) => {
   const monthIndex = getEdgeDateInMonthTimestamp({
     timestamp: selectedTimestamp,
@@ -94,7 +93,6 @@ const Grid = ({
       selected={(timestamp <= selectedTimestamp)
         && (selectedTimestamp <= timestamp + 23 * 60 * 60 * 1000 + 59 * 60 * 1000)}
       isToday={todayTimestamp === timestamp}
-      onSelect={onSelect}
     />
   ));
 };
@@ -104,7 +102,6 @@ function DatesGrid({
   todayTimestamp,
   selectedTimestamp,
   gap,
-  onSelect,
 }) {
   return (
     <Container
@@ -115,7 +112,6 @@ function DatesGrid({
         setTimestamp={setTimestamp}
         todayTimestamp={todayTimestamp}
         selectedTimestamp={selectedTimestamp}
-        onSelect={onSelect}
       />
     </Container>
   );
