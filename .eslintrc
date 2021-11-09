@@ -1,12 +1,14 @@
 {
   "extends": ["airbnb", "airbnb/hooks"],
   "env": {
-    "browser": true
+    "browser": true,
+    "jest/globals": true
   },
   "rules": {
     "react/jsx-curly-newline": "error"
   },
   "parserOptions": {
     "ecmaVersion": 2020
-  }
+  },
+  "plugins": ["jest"]
 }

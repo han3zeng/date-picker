@@ -104,14 +104,12 @@ function Foo() {
 
 
 ## TO DO
-* [x] production build
 * [ ] test cases
-* [ ] proptype check
-* typescriptize whole project
+* [ ] typescriptize whole project
 * properties
     * [ ] customized breakpoints
     * [ ] customized font-size
     * [ ] customized input border
-* optimized
+* optimization
     * [ ] click on outter area to close the DatePicker
     * [ ] mobile ux

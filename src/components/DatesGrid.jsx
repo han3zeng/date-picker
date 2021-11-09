@@ -21,7 +21,6 @@ const GridItem = styled.div`
   justify-content: center;
 `;
 
-
 function areEqual(prevProps, nextProps) {
   if (prevProps.monthIndex !== nextProps.monthIndex) {
     return false;

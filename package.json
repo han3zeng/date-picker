@@ -6,8 +6,22 @@
   "scripts": {
     "dev": "BABEL_ENV=development webpack-dev-server --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.prod.js",
-    "publish:customized": "cp ./package.json ./dist && cd ./dist && npm publish",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "publish:customized": "cp ./package.json ./README.md ./dist && cd ./dist && npm publish",
+    "test": "jest .test.js$"
+  },
+  "jest": {
+    "verbose": true,
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "testEnvironment": "jsdom"
   },
   "repository": {
     "type": "git",
@@ -26,25 +40,30 @@
   },
   "homepage": "https://github.com/han3zeng/date-picker#readme",
   "peerDependencies": {
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "styled-components": "^5.3.3",
-    "prop-types": "^15.7.2"
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.0",
     "@babel/preset-react": "^7.16.0",
+    "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/react": "^12.1.2",
+    "babel-jest": "^27.3.1",
     "babel-loader": "^8.2.3",
     "babel-plugin-styled-components": "^1.13.3",
     "clean-webpack-plugin": "^4.0.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jest": "^25.2.4",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "jest": "^27.3.1",
     "webpack": "^5.61.0",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.4.0"
