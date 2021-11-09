@@ -105,6 +105,11 @@ function Foo() {
     }
     ```
 
+## Browser compatibility
+| Chrome | Firefox | Edge | IE |
+| -- | -- | -- | -- |
+| V | V | V | X |
+
 
 ## TO DO
 * [x] test cases
