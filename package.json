@@ -1,6 +1,6 @@
 {
   "name": "react-styled-date-picker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "the react date picker for community",
   "main": "index.js",
   "scripts": {

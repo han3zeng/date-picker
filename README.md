@@ -38,7 +38,7 @@ function Foo() {
 }
 ```
 
-## Propertise for the DatePicker Component
+## Properties for the DatePicker Component
 
 #### onSelect
 * type: function
