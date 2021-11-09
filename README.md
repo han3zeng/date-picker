@@ -1,21 +1,24 @@
 # react-styled-date-picker
 
+## As Package Developer
 
-## Third-package Developer
+* Development (view the tool)
+    * run
+        1. `npm i`
+        2. `npm run dev`
+        3. browse `localhost:3001`
+    * test
+        1. `npm i`
+        2. `npm run test`
 
-* Development Mode (view the tool)
-    1. `npm i`
-    2. `npm run dev`
-    3. browse `localhost:3001`
-
-* Production Mode
+* Production (build and release)
     * build and publish to npm cloud server
         1. `npm i`
         2. `npm run build`
         3. `npm run publish:customized`
 
-
 ## Installation
+* Install the datepicker as dependency in your project
 * `npm i --save react-styled-date-picker`
 
 ```js
@@ -40,9 +43,9 @@ function Foo() {
 
 ## Properties for the DatePicker Component
 
-#### onSelect
+### onSelect
 * type: function
-* Component invokes the function when the user clicks a specific date
+* Component invokes the function when the user clicks a specific date.
 ```js
 function Foo() {
   return (
@@ -55,7 +58,7 @@ function Foo() {
 }
 ```
 
-#### initialTimestamp
+### initialTimestamp
 * type: number
 * When a user clicks on input, the input element and calendar dropdown will present specified initialTimestamp.
 
@@ -71,7 +74,7 @@ function Foo() {
 }
 ```
 
-#### gap
+### gap
 * type: object
 * Customize gap for date view, month view, year view in calendar dropdown
 
@@ -104,7 +107,7 @@ function Foo() {
 
 
 ## TO DO
-* [ ] test cases
+* [x] test cases
 * [ ] typescriptize whole project
 * properties
     * [ ] customized breakpoints
